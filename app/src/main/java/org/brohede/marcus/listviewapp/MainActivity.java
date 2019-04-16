@@ -2,8 +2,13 @@ package org.brohede.marcus.listviewapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -11,12 +16,17 @@ public class MainActivity extends AppCompatActivity {
     private String[] mountainLocations = {"Alps","Alps","Alaska"};
     private int[] mountainHeights ={4478,4808,6190};
     // Create ArrayLists from the raw data above and use these lists when populating your ListView.
+    private ArrayList<String> listData=new ArrayList<>(Arrays.asList(mountainNames));
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // The onCreate method is run when the app is created.
         // Before you can implement this you need to create the layout xml files that
@@ -34,8 +44,18 @@ public class MainActivity extends AppCompatActivity {
         //    * list_item_textview
         //    * my_item_textview
         //    * List object created in step 2
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.list_item_textview, R.id.list_item_textview, listData);
         // 4. Find the ListView layout element "my_listview" and create an object instance
+        ListView my_listview=(ListView) findViewById(R.id.my_listview);
         // 5. Connect the ArrayAdapter from step 3 with ListView object created in step 4
+        my_listview.setAdapter(adapter);
+
+        my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "Enter your text here", Toast.LENGTH_SHORT).show();
+            }
+        });
         // 6. Style the ListView items according to Material Design
         //    See: https://material.io/guidelines/components/lists.html#lists-specs
         //    Look for "singel line specs" for "text only" lists and modify the list_item_textview
