@@ -2,9 +2,12 @@ package org.brohede.marcus.listviewapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private int[] mountainHeights ={4478,4808,6190};
     // Create ArrayLists from the raw data above and use these lists when populating your ListView.
     private ArrayList<String> listData=new ArrayList<>(Arrays.asList(mountainNames));
+    private ArrayList<Mountain> mountainArrayList = new ArrayList<>();
+
 
 
 
@@ -26,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listData = new ArrayList<>(Arrays.asList(mountainNames));
+
+        mountainArrayList.add(new Mountain("Matterhorn", "Alps", 4478));
+        mountainArrayList.add(new Mountain("Mont Blanc", "Alps", 4808));
+        mountainArrayList.add(new Mountain("Denali", "Alaska", 6190));
+        Log.i("LAAKSO",mountainArrayList.get(0).getName());
 
 
         // The onCreate method is run when the app is created.
@@ -44,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         //    * list_item_textview
         //    * my_item_textview
         //    * List object created in step 2
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.list_item_textview, R.id.list_item_textview, listData);
+        ArrayAdapter<Mountain> adapter=new ArrayAdapter<Mountain>(this, R.layout.list_item_textview, R.id.list_item_textview, mountainArrayList);
         // 4. Find the ListView layout element "my_listview" and create an object instance
         ListView my_listview=(ListView) findViewById(R.id.my_listview);
         // 5. Connect the ArrayAdapter from step 3 with ListView object created in step 4
@@ -52,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
         my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Enter your text here", Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                Toast.makeText(getApplicationContext(), mountainArrayList.get(i).info(), Toast.LENGTH_SHORT).show();
             }
         });
         // 6. Style the ListView items according to Material Design

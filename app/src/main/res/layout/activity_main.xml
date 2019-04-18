@@ -8,7 +8,7 @@
 
     <!-- You need to enter your components here -->
     <ListView
-        android:id="@+id/list_item_textview"
+        android:id="@+id/my_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
